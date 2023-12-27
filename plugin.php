@@ -119,18 +119,18 @@ class Yoast_To_REST_API {
 	 * @return array
 	 */
 	function wp_api_update_yoast( $value, $data, $field_name ) {
-		error_log("Yoast_To_REST_API: Updating Yoast data for post ID {$data->ID}");
+		error_log("Yoast_To_REST_API: Updating Yoast data for post ID {$data->get_id()}");
 
 		foreach ( $value as $k => $v ) {
 
 			if ( in_array( $k, $this->keys ) ) {
-				error_log("Yoast_To_REST_API: Updating Yoast data for key {$k}");
-				! empty( $k ) ? update_post_meta( $data->ID, '_' . $k, $v ) : null;
+				error_log("Yoast_To_REST_API: Updating Yoast data for key {$k} with value {$v}");
+				! empty( $k ) ? update_post_meta( $data->get_id(), '_' . $k, $v ) : null;
 			}
 		}
 
-		error_log("Yoast_To_REST_API: Yoast data update completed for post ID {$data->ID}");
-		return $this->wp_api_encode_yoast( $data->ID, null, null );
+		error_log("Yoast_To_REST_API: Yoast data update completed for post ID {$data->get_id()}");
+		return $this->wp_api_encode_yoast( $data->get_id(), null, null );
 	}
 
 	function wp_api_encode_yoast( $p, $field_name, $request ) {
@@ -217,7 +217,7 @@ class Yoast_To_REST_API {
 }
 
 function WPAPIYoast_init() {
-	error_log('WPAPIYoast_init: Initializing Yoast to REST API plugin');
+	error_log('Yoast_To_REST_API: Initializing Yoast to REST API plugin');
 
 	if ( class_exists( 'WPSEO_Frontend' ) ) {
 		include __DIR__ . '/classes/class-wpseo-frontend-to-rest-api.php';
