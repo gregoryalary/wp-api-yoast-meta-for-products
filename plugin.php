@@ -76,6 +76,16 @@ class Yoast_To_REST_API {
 			)
 		);
 
+		// Product
+		register_rest_field( 'product',
+			'yoast_meta',
+			array(
+				'get_callback'    => array( $this, 'wp_api_encode_yoast_tag' ),
+				'update_callback' => null,
+				'schema'          => null,
+			)
+		);
+
 		// Public custom post types
 		$types = get_post_types( array(
 			'public'   => true,
