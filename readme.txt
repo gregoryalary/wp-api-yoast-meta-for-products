@@ -1,5 +1,5 @@
-=== Yoast to REST API ===
-Contributors: Niels Garve, Pablo Postigo, Tedy Warsitha, Charlie Francis
+=== Yoast to REST API With Products ===
+Contributors: Niels Garve, Pablo Postigo, Tedy Warsitha, Charlie Francis, Grégory Alary
 Tags: yoast, wp-api, rest, seo
 Requires at least: 4.4
 Tested up to: 4.9.1
@@ -7,11 +7,11 @@ Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Returns Yoast post or page metadata in a normal post or page request.
+Returns Yoast post or page metadata in a normal post, page or product request.
 
 == Description ==
 
-Returns Yoast post or page metadata in a normal post or page request. Stores the metadata in the `yoast_meta` field of the returned data.
+Returns Yoast post, page or product metadata in a normal post or page request. Stores the metadata in the `yoast_meta` field of the returned data.
 
 ```
 {

@@ -3,12 +3,12 @@
 add_action( 'plugins_loaded', 'WPAPIYoast_init' );
 
 /**
- * Plugin Name: Yoast to REST API
- * Description: Adds Yoast fields to page and post metadata to WP REST API responses
- * Author: Niels Garve, Pablo Postigo, Tedy Warsitha, Charlie Francis
- * Author URI: https://github.com/niels-garve
+ * Plugin Name: Yoast to REST API With Products
+ * Description: Adds Yoast fields to page, post and product metadata to WP REST API responses
+ * Author: Niels Garve, Pablo Postigo, Tedy Warsitha, Charlie Francis, Grégory Alary
+ * Author URI: https://github.com/gregoryalary
  * Version: 1.4.2
- * Plugin URI: https://github.com/niels-garve/yoast-to-rest-api
+ * Plugin URI: https://github.com/gregoryalary/wp-api-yoast-meta-for-products
  */
 class Yoast_To_REST_API {
 
@@ -32,10 +32,13 @@ class Yoast_To_REST_API {
 	);
 
 	function __construct() {
+		error_log('Yoast_To_REST_API: Constructor called');
 		add_action( 'rest_api_init', array( $this, 'add_yoast_data' ) );
 	}
 
 	function add_yoast_data() {
+		error_log('Yoast_To_REST_API: Adding Yoast data to REST API');
+
 		// Posts
 		register_rest_field( 'post',
 			'yoast_meta',
@@ -102,6 +105,8 @@ class Yoast_To_REST_API {
 				)
 			);
 		}
+
+		error_log('Yoast_To_REST_API: Yoast data added successfully');
 	}
 
 	/**
@@ -114,14 +119,17 @@ class Yoast_To_REST_API {
 	 * @return array
 	 */
 	function wp_api_update_yoast( $value, $data, $field_name ) {
+		error_log("Yoast_To_REST_API: Updating Yoast data for post ID {$data->ID}");
 
 		foreach ( $value as $k => $v ) {
 
 			if ( in_array( $k, $this->keys ) ) {
+				error_log("Yoast_To_REST_API: Updating Yoast data for key {$k}");
 				! empty( $k ) ? update_post_meta( $data->ID, '_' . $k, $v ) : null;
 			}
 		}
 
+		error_log("Yoast_To_REST_API: Yoast data update completed for post ID {$data->ID}");
 		return $this->wp_api_encode_yoast( $data->ID, null, null );
 	}
 
@@ -209,6 +217,8 @@ class Yoast_To_REST_API {
 }
 
 function WPAPIYoast_init() {
+	error_log('WPAPIYoast_init: Initializing Yoast to REST API plugin');
+
 	if ( class_exists( 'WPSEO_Frontend' ) ) {
 		include __DIR__ . '/classes/class-wpseo-frontend-to-rest-api.php';
 
