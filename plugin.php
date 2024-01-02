@@ -89,6 +89,16 @@ class Yoast_To_REST_API {
 			)
 		);
 
+		// Terms
+		register_rest_field( 'term',
+			'yoast_meta',
+			array(
+				'get_callback'    => array( $this, 'wp_api_encode_yoast' ),
+				'update_callback' => array( $this, 'wp_api_update_yoast' ),
+				'schema'          => null,
+			)
+		);
+
 		// Public custom post types
 		$types = get_post_types( array(
 			'public'   => true,
