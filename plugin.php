@@ -129,18 +129,19 @@ class Yoast_To_REST_API {
 	 * @return array
 	 */
 	function wp_api_update_yoast( $value, $data, $field_name ) {
-		error_log("Yoast_To_REST_API: Updating Yoast data for post ID {$data->get_id()}");
+		$data_id = is_callable( array( $data, 'get_ID' ) ) ? $data->get_ID() : $data->ID;
+		error_log("Yoast_To_REST_API: Updating Yoast data for post ID {$data_id}");
 
 		foreach ( $value as $k => $v ) {
 
 			if ( in_array( $k, $this->keys ) ) {
 				error_log("Yoast_To_REST_API: Updating Yoast data for key {$k} with value {$v}");
-				! empty( $k ) ? update_post_meta( $data->get_id(), '_' . $k, $v ) : null;
+				! empty( $k ) ? update_post_meta( $data_id, '_' . $k, $v ) : null;
 			}
 		}
 
-		error_log("Yoast_To_REST_API: Yoast data update completed for post ID {$data->get_id()}");
-		return $this->wp_api_encode_yoast( $data->get_id(), null, null );
+		error_log("Yoast_To_REST_API: Yoast data update completed for post ID {$data_id}");
+		return $this->wp_api_encode_yoast( $data_id, null, null );
 	}
 
 	function wp_api_encode_yoast( $p, $field_name, $request ) {
